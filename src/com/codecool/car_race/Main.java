@@ -2,13 +2,6 @@ package com.codecool.car_race;
 
 
 public class Main {
-
-    /**
-     * Creates all the vehicles that will be part of this race.
-     */
-    private static void createVehicles(Race race) {
-    }
-
     /**
      * Entry point of our program. Creates one race instance and
      * uses that.
@@ -18,10 +11,11 @@ public class Main {
      *             It is unused.
      */
     public static void main(String[] args) {
+        Weather weather = new Weather();
         Race race = new Race();
-        createVehicles(race);
+        race.createVehicles();
 
-        race.simulateRace();
+        race.simulateRace(weather);
         race.printRaceResults();
     }
 }
