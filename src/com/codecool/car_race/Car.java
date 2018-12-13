@@ -1,69 +1,64 @@
 package com.codecool.car_race;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class Car implements Vehicles {
 
-    private static List<String> firstNames = new LinkedList<String>();
-    private static List<String> lastNames = new LinkedList<String>();
+    private Random rand = new Random();
+    private static List<String> names = new LinkedList<String>(Arrays.asList("Adventure", "Aeon", "Augury", "Barrage",
+            "Basilisk", "Blaze", "Blend", "Buffalo", "Celestial", "Crusader",
+            "Dynamo", "Eagle", "Eternity", "Excursion", "Expedition", "Ferocity", "Formula", "Gallop", "Hollo",
+            "Inception", "Inquiry", "Jazz", "Magic", "Moonlight", "Morale", "Olympian", "Oracle", "Orbit", "Paradox",
+            "Parallel", "Passion", "Prodigy", "Prospect", "Radiance", "Ranger", "Reach", "Sanctuary", "Shadow",
+            "Sliver", "Sprite", "Starlight", "Storm", "Supremacy", "Tigress", "Tracer", "Twister", "Umbra",
+            "Universe", "Vanish", "Vertex", "Vigor", "Viper", "Virtue", "Vortex", "Wish", "Zeal"));
 
-    int originalSpeed = 0;
-    int actualSpeed = 0;
-    int totalDistanceTravelled = 0;
+
+    int originalSpeed;
+    int actualSpeed;
+    int totalDistanceTravelled;
     List<Integer> distancePerRound = new ArrayList<>();
     String name = null;
 
 
     public Car() {
-        //use random to get names
-        //call setName
-        //set originalSpeed
+        setName();
+        setOriginalSpeed();
+        this.totalDistanceTravelled = 0;
     }
 
 
     @Override
-    public void prepareForLap(Race race) {
+    public void moveForAnHour(boolean truckBrokenDown) {
+        this.calculateDistance(truckBrokenDown);
 
     }
 
     @Override
-    public void moveForAnHour() {
-
+    public void calculateDistance(boolean truckBrokenDown) {
+        if (truckBrokenDown) {
+            this.distancePerRound.add(75);
+            this.actualSpeed = 75;
+        } else {
+            this.distancePerRound.add(this.originalSpeed);
+            this.totalDistanceTravelled += originalSpeed;
+        }
     }
 
-    @Override
-    public void setName() {
-        String newName;
-        /* call random to pick a nem from firstName and lastName
-        concatenate them
-         */
+
+
+    private void setName() {
+        String newName = "";
+        for (int i = 0; i < 2; i++) {
+            int nameIndex = rand.nextInt(names.size());
+            newName = newName + names.get(nameIndex);
+            names.remove(nameIndex);
+        }
         this.name = newName;
     }
 
-
-    @Override
-    public void calculateDistance() {
-
-
-
-    }
-
-    @Override
-    public void setDistancePerRound() {
-
-    }
-
-
-    public void adjustRoundSpeed(boolean truckBrokenDown) {
-        if (truckBrokenDown) {
-            this.actualSpeed = 75;
-        } else {
-            this.actualSpeed = this.originalSpeed
-        }
-
+    private void setOriginalSpeed() {
+        this.originalSpeed = rand.nextInt(31) + 80;
     }
 
 }
@@ -79,27 +74,4 @@ public class Car implements Vehicles {
     prepareForLap(Race race) // setup the actual speed used for the current lap
 
     moveForAnHour() // The vehicle travels for an hour. It increases the distance traveled. Call this from the Race::simulateRace() only!
-
-
-Adventure
-Augury
-Dynamo
-Blaze
-Basilisk
-Buffalo
-Storm
-Inquiry
-Barrage
-Twister
-Zeal
-Paradox
-Eagle
-Oracle
-Viper
-Orbit
-Aeon
-Excursion
-Shadow
-Expedition
-
     */
