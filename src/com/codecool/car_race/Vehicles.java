@@ -11,21 +11,8 @@ public interface Vehicles {
     String name = null;
 
 
-    void prepareForLap(Race race);
+    public int moveForAnHour(boolean truckBrokenDown);
 
-    void moveForAnHour();
-
-    void setName();
-            /* call random to pick a nem from firstName and lastName
-        concatenate them
-         */
-
-    void calculateDistance();
-
-    void setDistancePerRound();
-
-
-
-
+    public int calculateDistance(boolean truckBrokenDown);
 
 }
