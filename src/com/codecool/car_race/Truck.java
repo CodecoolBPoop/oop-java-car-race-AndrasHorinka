@@ -17,7 +17,7 @@ public class Truck implements Vehicles {
         generateName();
     }
 
-    private void generateName() {
+    public void generateName() {
         String name = new String();
         while (truckNames.contains(this.name)) {
             name = "Truck" + rand.nextInt(1001);
@@ -42,7 +42,7 @@ public class Truck implements Vehicles {
     }
 
     @Override
-    public int moveForAnHour(boolean truckBrokenDown) {
+    public int moveForAnHour(boolean truckBrokenDown, boolean isRaining) {
         if (getBreakdownTurnsLeft() > 0) {
             setBreakdownTurnsLeft(getBreakdownTurnsLeft() - 1);
             return 0;

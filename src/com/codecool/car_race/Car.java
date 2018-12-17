@@ -14,22 +14,33 @@ public class Car implements Vehicles {
             "Universe", "Vanish", "Vertex", "Vigor", "Viper", "Virtue", "Vortex", "Wish", "Zeal"));
 
 
-    int originalSpeed;
-    int actualSpeed;
-    int totalDistanceTravelled;
-    List<Integer> distancePerRound = new ArrayList<>();
-    String name = null;
+    private int originalSpeed;
+    private int actualSpeed;
+    private int totalDistanceTravelled;
+    ArrayList<Integer> distancePerRound = new ArrayList<>();
+    private String name = null;
 
 
     public Car() {
-        setName();
+        generateName();
         setOriginalSpeed();
         this.totalDistanceTravelled = 0;
     }
 
 
     @Override
-    public int moveForAnHour(boolean truckBrokenDown) {
+    public void generateName() {
+        String newName = "";
+        for (int i = 0; i < 2; i++) {
+            int nameIndex = rand.nextInt(names.size());
+            newName = newName + names.get(nameIndex);
+            names.remove(nameIndex);
+        }
+        this.name = newName;
+    }
+
+    @Override
+    public int moveForAnHour(boolean truckBrokenDown, boolean isRaining) {
         return this.calculateDistance(truckBrokenDown);
     }
 
@@ -46,18 +57,6 @@ public class Car implements Vehicles {
             return originalSpeed;
         }
     }
-
-
-    private void setName() {
-        String newName = "";
-        for (int i = 0; i < 2; i++) {
-            int nameIndex = rand.nextInt(names.size());
-            newName = newName + names.get(nameIndex);
-            names.remove(nameIndex);
-        }
-        this.name = newName;
-    }
-
 
     private void setOriginalSpeed() {
         this.originalSpeed = rand.nextInt(31) + 80;
