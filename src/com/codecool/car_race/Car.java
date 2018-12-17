@@ -29,22 +29,23 @@ public class Car implements Vehicles {
 
 
     @Override
-    public void moveForAnHour(boolean truckBrokenDown) {
-        this.calculateDistance(truckBrokenDown);
-
+    public int moveForAnHour(boolean truckBrokenDown) {
+        return this.calculateDistance(truckBrokenDown);
     }
 
+
     @Override
-    public void calculateDistance(boolean truckBrokenDown) {
+    public int calculateDistance(boolean truckBrokenDown) {
         if (truckBrokenDown) {
             this.distancePerRound.add(75);
             this.actualSpeed = 75;
+            return 75;
         } else {
             this.distancePerRound.add(this.originalSpeed);
             this.totalDistanceTravelled += originalSpeed;
+            return originalSpeed;
         }
     }
-
 
 
     private void setName() {
@@ -56,6 +57,7 @@ public class Car implements Vehicles {
         }
         this.name = newName;
     }
+
 
     private void setOriginalSpeed() {
         this.originalSpeed = rand.nextInt(31) + 80;

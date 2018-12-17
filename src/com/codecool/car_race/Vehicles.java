@@ -11,8 +11,8 @@ public interface Vehicles {
     String name = null;
 
 
-    void moveForAnHour(boolean truckBrokenDown);
+    public int moveForAnHour(boolean truckBrokenDown);
 
-    void calculateDistance(boolean truckBrokenDown);
+    public int calculateDistance(boolean truckBrokenDown);
 
 }
