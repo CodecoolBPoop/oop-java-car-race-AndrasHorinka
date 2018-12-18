@@ -15,7 +15,7 @@ public class Main {
         Race race = new Race();
         race.createVehicles();
 
-        race.simulateRace(weather);
+        race.simulateRace(weather.isRaining());
         race.printRaceResults();
     }
 }
