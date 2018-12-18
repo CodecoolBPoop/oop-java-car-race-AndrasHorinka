@@ -10,7 +10,7 @@ public class Race {
     private final int NUMBER_OF_TRUCKS = 10;
     private final int NUMBER_OF_MOTOS = 10;
     private final int RACE_LENGTH = 50;
-    private int round = 0;
+    private int round = 1;
     private boolean truckBrokenDown = false;
     private int roundWhenTruckBrokeDown = 0;
 
@@ -41,11 +41,29 @@ public class Race {
         }
     }
 
-    public void simulateRace(Weather weather) {
+    public void simulateRace(boolean isRaining) {
+        if (getRound() <= getRoundWhenTruckBrokeDown() + 1) {
+            setTruckBrokenDown(true);
+        } else {
+            for (Truck truck : trucks) {
+                int distance = truck.moveForAnHour(isTruckBrokenDown(), isRaining);
+                if (distance == 0) {
+                    setTruckBrokenDown(true);
+                }
+            }
+        }
+
+        for (Motorcycle moto: motos) {
+            moto.moveForAnHour(isTruckBrokenDown(), isRaining);
+        }
+        for (Car car: cars) {
+            car.moveForAnHour(isTruckBrokenDown(), isRaining);
+        }
+
+        nextRound();
         /*
         INIT
             we start by checking round number --> if roundWhenTruckBrokeDown +1 < round --> this.truckBrokenDown = false
-            we check the Weather
         RACE
             we start by calculating the trucks - to see if any of them are broken down
             we follow by checking the Motos - considering Weather
@@ -65,8 +83,29 @@ public class Race {
          */
     }
 
-    public void setTruckBrokenDown(boolean truckBrokenDown) {
+    private void setTruckBrokenDown(boolean truckBrokenDown) {
         this.truckBrokenDown = truckBrokenDown;
-        this.roundWhenTruckBrokeDown = this.round;
+        setRoundWhenTruckBrokeDown(getRound());
+    }
+
+    private boolean isTruckBrokenDown() {
+        return this.truckBrokenDown;
+    }
+
+    private int getRound() {
+        return this.round;
+    }
+
+    private void nextRound() {
+        this.round += 1;
+    }
+
+    private int getRoundWhenTruckBrokeDown() {
+        return this.roundWhenTruckBrokeDown;
+    }
+
+    private void setRoundWhenTruckBrokeDown(int roundWhenTruckBrokeDown) {
+        this.roundWhenTruckBrokeDown = roundWhenTruckBrokeDown;
+
     }
 }
