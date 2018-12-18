@@ -41,7 +41,10 @@ public class Race {
         }
     }
 
-    public void simulateRace(boolean isRaining) {
+    public boolean simulateRace(boolean isRaining) {
+        if (getRound() == RACE_LENGTH) {
+            return false;
+        }
         if (getRound() <= getRoundWhenTruckBrokeDown() + 1) {
             setTruckBrokenDown(true);
         } else {
@@ -61,6 +64,7 @@ public class Race {
         }
 
         nextRound();
+        return true;
         /*
         INIT
             we start by checking round number --> if roundWhenTruckBrokeDown +1 < round --> this.truckBrokenDown = false
@@ -71,6 +75,8 @@ public class Race {
                 for each vehicle calculate the distance
         TRACKING
             Update the order of vehicles
+        END
+            Return False if no more rounds left
             */
 
     }

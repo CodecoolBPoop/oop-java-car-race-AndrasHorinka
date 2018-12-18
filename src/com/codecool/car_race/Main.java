@@ -12,10 +12,11 @@ public class Main {
      */
     public static void main(String[] args) {
         Weather weather = new Weather();
+        boolean raceGoing = true;
         Race race = new Race();
         race.createVehicles();
 
-        race.simulateRace(weather.isRaining());
+        while (raceGoing) raceGoing = race.simulateRace(weather.isRaining());
         race.printRaceResults();
     }
 }
