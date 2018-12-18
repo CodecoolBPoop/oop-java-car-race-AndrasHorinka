@@ -26,6 +26,16 @@ public class Truck implements Vehicles {
         this.name  = name;
     }
 
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public List<Integer> getDistancePerRound() {
+        return this.distancePerRound;
+    }
+
     private void setBreakdownTurnsLeft(int breakdownTurnsleft) {
         this.breakdownTurnsLeft = breakdownTurnsleft;
     }
@@ -35,7 +45,9 @@ public class Truck implements Vehicles {
     }
 
     private boolean isBroken() {
-        if (rand.nextInt(100) < 5) {
+        int rng = rand.nextInt(100);
+        if (rng < 5) {
+            System.out.println("RNG is: " + rng);
             return true;
         }
         return false;
@@ -58,10 +70,19 @@ public class Truck implements Vehicles {
     @Override
     public int calculateDistance(boolean truckBrokenDown) {
         this.distancePerRound.add(100);
-        this.totalDistanceTravelled += 100;
+        increaseTotalDistanceTravelled(100);
         return 100;
         }
 
+    @Override
+    public int getTotalDistanceTravelled() {
+        return this.totalDistanceTravelled;
+    }
+
+    @Override
+    public void increaseTotalDistanceTravelled(int totalDistanceTravelled) {
+        this.totalDistanceTravelled += totalDistanceTravelled;
+    }
 
 }
 

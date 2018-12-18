@@ -8,10 +8,18 @@ public interface Vehicles {
     List<Integer> distancePerRound = new ArrayList<>();
     String name = null;
 
-    public void generateName();
+    void generateName();
 
-    public int moveForAnHour(boolean truckBrokenDown, boolean isRaining);
+    String getName();
 
-    public int calculateDistance(boolean truckBrokenDown);
+    List<Integer> getDistancePerRound();
+
+    int moveForAnHour(boolean truckBrokenDown, boolean isRaining);
+
+    int calculateDistance(boolean truckBrokenDown);
+
+    int getTotalDistanceTravelled();
+
+    void increaseTotalDistanceTravelled(int totalDistanceTravelled);
 
 }

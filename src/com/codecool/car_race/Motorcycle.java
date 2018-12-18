@@ -27,6 +27,16 @@ public class Motorcycle implements Vehicles {
     }
 
     @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public List<Integer> getDistancePerRound() {
+        return this.distancePerRound;
+    }
+
+    @Override
     public int moveForAnHour(boolean truckBrokenDown, boolean isRaining) {
         Integer actualSpeed;
         if (isRaining) {
@@ -35,7 +45,7 @@ public class Motorcycle implements Vehicles {
             actualSpeed = getOriginalSpeed();
         }
 
-        setTotalDistanceTravelled(actualSpeed);
+        increaseTotalDistanceTravelled(actualSpeed);
         setDistancePerRound(actualSpeed);
         return actualSpeed;
     }
@@ -54,11 +64,18 @@ public class Motorcycle implements Vehicles {
         return originalSpeed - (rand.nextInt(46) + 5);
     }
 
-    public void setTotalDistanceTravelled(int totalDistanceTravelled) {
+
+    @Override
+    public int getTotalDistanceTravelled() {
+        return this.totalDistanceTravelled;
+    }
+
+    @Override
+    public void increaseTotalDistanceTravelled(int totalDistanceTravelled) {
         this.totalDistanceTravelled += totalDistanceTravelled;
     }
 
-    public void setDistancePerRound(int distanceTravelled) {
+    private void setDistancePerRound(int distanceTravelled) {
         this.distancePerRound.add(distanceTravelled);
     }
 }

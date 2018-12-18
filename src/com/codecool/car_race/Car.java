@@ -17,7 +17,7 @@ public class Car implements Vehicles {
     private int originalSpeed;
     private int actualSpeed;
     private int totalDistanceTravelled;
-    ArrayList<Integer> distancePerRound = new ArrayList<>();
+    List<Integer> distancePerRound = new ArrayList<>();
     private String name = null;
 
 
@@ -40,6 +40,16 @@ public class Car implements Vehicles {
     }
 
     @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public List<Integer> getDistancePerRound() {
+        return this.distancePerRound;
+    }
+
+    @Override
     public int moveForAnHour(boolean truckBrokenDown, boolean isRaining) {
         return this.calculateDistance(truckBrokenDown);
     }
@@ -53,7 +63,7 @@ public class Car implements Vehicles {
             return 75;
         } else {
             this.distancePerRound.add(this.originalSpeed);
-            this.totalDistanceTravelled += originalSpeed;
+            increaseTotalDistanceTravelled(originalSpeed);
             return originalSpeed;
         }
     }
@@ -62,6 +72,15 @@ public class Car implements Vehicles {
         this.originalSpeed = rand.nextInt(31) + 80;
     }
 
+    @Override
+    public int getTotalDistanceTravelled() {
+        return totalDistanceTravelled;
+    }
+
+    @Override
+    public void increaseTotalDistanceTravelled(int totalDistanceTravelled) {
+        this.totalDistanceTravelled += totalDistanceTravelled;
+    }
 }
 
 /*
