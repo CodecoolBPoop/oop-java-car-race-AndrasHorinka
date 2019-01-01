@@ -60,10 +60,11 @@ public class Car implements Vehicles {
         if (truckBrokenDown) {
             this.distancePerRound.add(75);
             this.actualSpeed = 75;
+            this.increaseTotalDistanceTravelled(75);
             return 75;
         } else {
             this.distancePerRound.add(this.originalSpeed);
-            increaseTotalDistanceTravelled(originalSpeed);
+            this.increaseTotalDistanceTravelled(originalSpeed);
             return originalSpeed;
         }
     }
@@ -74,7 +75,7 @@ public class Car implements Vehicles {
 
     @Override
     public int getTotalDistanceTravelled() {
-        return totalDistanceTravelled;
+        return this.totalDistanceTravelled;
     }
 
     @Override

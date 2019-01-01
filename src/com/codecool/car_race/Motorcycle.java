@@ -22,7 +22,7 @@ public class Motorcycle implements Vehicles {
     @Override
     public void generateName() {
         int motoNr = Motorcycle.motoNames.size();
-        this.name = "Motorcycle " + Integer.toString(motoNr + 1);
+        this.name = "Moto " + Integer.toString(motoNr + 1);
         Motorcycle.motoNames.add(this.name);
     }
 

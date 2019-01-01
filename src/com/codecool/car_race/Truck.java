@@ -18,12 +18,21 @@ public class Truck implements Vehicles {
     }
 
     public void generateName() {
-        String name = new String();
-        while (truckNames.contains(this.name)) {
-            name = "Truck" + rand.nextInt(1001);
+        String name = this.nameGenerator();
+        boolean okName = true;
+        while (okName) {
+            if (Truck.truckNames.contains(name)) {
+                this.generateName();
+            } else {
+                Truck.truckNames.add(name);
+                this.name = name;
+                okName = false;
+            }
         }
-        Truck.truckNames.add(name);
-        this.name  = name;
+    }
+
+    private String nameGenerator() {
+        return "Truck" + rand.nextInt(1001);
     }
 
     @Override
@@ -47,7 +56,6 @@ public class Truck implements Vehicles {
     private boolean isBroken() {
         int rng = rand.nextInt(100);
         if (rng < 5) {
-            System.out.println("RNG is: " + rng);
             return true;
         }
         return false;
@@ -70,7 +78,7 @@ public class Truck implements Vehicles {
     @Override
     public int calculateDistance(boolean truckBrokenDown) {
         this.distancePerRound.add(100);
-        increaseTotalDistanceTravelled(100);
+        this.increaseTotalDistanceTravelled(100);
         return 100;
         }
 

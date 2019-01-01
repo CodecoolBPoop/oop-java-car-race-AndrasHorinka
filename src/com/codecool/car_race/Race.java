@@ -10,7 +10,7 @@ public class Race {
     private final int NUMBER_OF_CARS = 10;
     private final int NUMBER_OF_TRUCKS = 10;
     private final int NUMBER_OF_MOTOS = 10;
-    private final int RACE_LENGTH = 40;
+    private final int RACE_LENGTH = 10;
     private int round = 1;
     private boolean truckBrokenDown = false;
     private int roundWhenTruckBrokeDown = 0;
@@ -44,37 +44,48 @@ public class Race {
     }
 
     public boolean simulateRace() {
-        boolean isRaining = rand.nextBoolean();
-        setTruckBrokenDown(false);
-
         if (getRound() == RACE_LENGTH) {
             return false;
-        }
-        if (getRound() <= getRoundWhenTruckBrokeDown() + 1) {
-            setTruckBrokenDown(true);
         } else {
+            setTruckBrokenDown(false);
+            boolean isRaining = rand.nextBoolean();
+
+            if (getRound() > 1 && getRound() <= getRoundWhenTruckBrokeDown() + 1) {
+                setTruckBrokenDown(true);
+            } else {
+                setTruckBrokenDown(false);
+            }
+            System.out.println("\n round" + getRound() + ": rain: " + isRaining + " ~ truck: " + truckBrokenDown + "\n");
+
+            System.out.println("********** TRUCKS **********");
             for (Truck truck : trucks) {
                 int distance = truck.moveForAnHour(isTruckBrokenDown(), isRaining);
+                System.err.println("Truck name: " + truck.getName() + " ~ dist: " + distance);
                 if (distance == 0) {
                     setTruckBrokenDown(true);
                 }
                 setOrder(truck);
             }
-        }
 
-        for (Motorcycle moto: motos) {
-            moto.moveForAnHour(isTruckBrokenDown(), isRaining);
-            setOrder(moto);
-        }
-        setTruckBrokenDown(false);
-        for (Car car: cars) {
-            car.moveForAnHour(isTruckBrokenDown(), isRaining);
-            setOrder(car);
-        }
+            System.out.println("********** MOTOS **********");
+            for (Motorcycle moto: motos) {
+                int distance = moto.moveForAnHour(isTruckBrokenDown(), isRaining);
+                System.err.println("Motor: " + moto.getName() + " ~ dist: " + distance);
+                setOrder(moto);
+            }
+
+//            setTruckBrokenDown(false);
+            System.out.println("********** CARS **********");
+            for (Car car: cars) {
+                int distance = car.moveForAnHour(isTruckBrokenDown(), isRaining);
+                System.err.println("Car: " + car.getName() + " ~ dist: " + distance);
+                setOrder(car);
+            }
 
 
-        nextRound();
-        return true;
+            nextRound();
+            return true;
+        }
         /*
         INIT
             we start by checking round number --> if roundWhenTruckBrokeDown +1 < round --> this.truckBrokenDown = false
@@ -101,24 +112,24 @@ public class Race {
 //    }
 
     public void printRaceResults() {
-        for (int i = 0; i < 3; i++) {
-            String name = order.get(i).getName();
-            int distance = order.get(i).getTotalDistanceTravelled();
-            List<Integer> distancePerRound = order.get(i).getDistancePerRound();
-            System.out.println("The " + i + ". vehicle is: " + name + ". | Distance travelled: " + distance);
-            for (int r = 4; r < RACE_LENGTH; r = r + 5) {
-
-                System.out.println("Distance took at round: " + (r + 1) + ": " + distancePerRound.get(r-1));
-            }
-
-
+        for (Vehicles vehicle: order) {
+            System.out.println(vehicle.getName() + ": " + vehicle.getTotalDistanceTravelled());
         }
+//        for (int i = 0; i < 3; i++) {
+//            String name = order.get(i).getName();
+//            int distance = order.get(i).getTotalDistanceTravelled();
+//            List<Integer> distancePerRound = order.get(i).getDistancePerRound();
+//            System.out.println("The " + i + ". vehicle is: " + name + ". | Distance travelled: " + distance);
+//            for (int r = 4; r < RACE_LENGTH; r = r + 5) {
+//                System.out.println("Distance took at round: " + (r + 1) + ": " + distancePerRound.get(r-1));
+//            }
+//        }
+    }
         /* print total distance
         print each vehicle - type - name - distance travelled
         print for first 3 vehicle the positions after each round
         -first green, 2nd yellow, 3rd red
          */
-    }
 
 
     private void setOrder(Vehicles newVehicle) {
@@ -137,7 +148,9 @@ public class Race {
 
     private void setTruckBrokenDown(boolean truckBrokenDown) {
         this.truckBrokenDown = truckBrokenDown;
-        setRoundWhenTruckBrokeDown(getRound());
+        if (truckBrokenDown) {
+            setRoundWhenTruckBrokeDown(getRound());
+        }
     }
 
     private boolean isTruckBrokenDown() {
