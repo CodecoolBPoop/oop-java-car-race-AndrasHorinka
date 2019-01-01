@@ -15,10 +15,13 @@ public class Main {
         Race race = new Race();
         race.createVehicles();
 
-        while (raceGoing) {
-            raceGoing = race.simulateRace();
+        for (int i = 0; i < race.getRACE_LENGTH(); i++) {
+            race.simulateRace();
         }
-
+        System.out.println("Print results ------------------");
         race.printRaceResults();
     }
 }
+
+
+//THe issue is that each Vehicle are added every time. While I wanted to add only the distance. So the order is not correct
